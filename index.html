@@ -181,19 +181,7 @@
 			return hash.toLowerCase();
 		}
 
-		function toSiteURL(url) {
-			if (url.hostname == 'api.github.com' && url.pathname.startsWith('/repos/eclipse-platform/www.eclipse.org-eclipse/contents')) {
-				const result = new URL(window.location);
-				result.pathname = url.pathname.replace(/\/repos\/eclipse-platform\/www.eclipse.org-eclipse\/contents/, '/eclipse')
-				result.hash = url.hash;
-				result.search = url.search;
-				return result;
-			} else {
-				return null;
-			}
-		}
-
-		function generateMarkdown(logicalBaseURL, response) {
+		function generateMarkdown(response) {
 			const text = response;
 			const editLink = `<a id="edit-markdown-link" href=""><span class="orange">\u270E Improve this page</span></a>\n`;
 			marked.use(markedGfmHeadingId.gfmHeadingId());
@@ -245,36 +233,8 @@ ${headings.map(({id, raw, level}) => `<li class="tl${level}"><a href="#${id}">${
 			updateTocSize();
 		}
 
-		/*
-		function generatBreadcrumbPath(crumbPath, segment) {
-			const fullPath = `{crumbPath}`;
-			return {
-				// TODO
-				label: segment.length == 0 ? 'Index' : niceName(segment.replace(/\.md$/, '')),
-				href: getMarkdownSearch(fullPath)
-			};
-		}
-		*/
+		document.title = `Oomph | ${niceName(file.replace(/^.*\//, ''))}`;
 
-		// TODO
-		document.title = `Documentation | Oomph`;
-
-		/*
-		const normalizedPath = file.replace(/\/$/, '');
-		const breadcrumb = document.querySelector(".breadcrumb");
-		const segments = normalizedPath == '' ? [''] : ['', ...normalizedPath.split('/')];
-		let crumbPath = '';
-		for (const segment of segments) {
-			crumbPath = (crumbPath == '/' ? '/' : crumbPath + '/') + segment;
-			const crumb = generatBreadcrumbPath(crumbPath, segment);
-			if (crumb != null) {
-				breadcrumb.append(...toElements(`<li><a href="${crumb.href}">${crumb.label}</a></li>`));
-			}
-		}
-		*/
-
-		// const logicalBaseURL = new URL(`https://api.github.com/repos/${org}/${repo}/contents/${path}`);
-		// const apiURL = `${logicalBaseURL}?ref=${branch}`;
 		const localURL = new URL(file, window.location);
 		defaultURL = localURL.toString();
 
@@ -282,7 +242,7 @@ ${headings.map(({id, raw, level}) => `<li class="tl${level}"><a href="#${id}">${
 			fetch(url).then(response => {
 				return response.text();
 			}).then(text => {
-				generateMarkdown(null /* TODO logicalBaseURL) */, text);
+				generateMarkdown(text);
 			});
 		}
 
