@@ -1,8 +1,12 @@
 # Eclipse Installer
 
+<details>
+<summary>
 The Eclipse Installer automates the installation of Eclipse development environments.
+</summary>
 
 ![OomphSimpleInstaller2.png](images/OomphSimpleInstaller2.png)
+</details>
 
 See the [Authoring Guide](Authoring_Guide.md) for details about how to customize the installer to create installations and provision workspaces for your specialized needs.
 
