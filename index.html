@@ -142,22 +142,6 @@
 			return search.get('file') ?? 'index.md';
 		}
 
-		function getMarkdownSearch(path) {
-			const parts = /eclipse-platform\/www\.eclipse\.org-eclipse\/master(.*)/.exec(path);
-			if (parts == null) {
-				return `?file=${path}`;
-			}
-			return `?f=${parts[1].replace(/^\//, '')}`;
-		}
-
-		function getMarkdownURL(path) {
-			const parts = /eclipse-platform\/www\.eclipse\.org-eclipse\/master(.*)/.exec(path);
-			if (parts == null) {
-				return `${markdownBase}${path}`;
-			}
-			return `${selfHostedMarkdownBase}${parts[1].replace(/^\//, '')}`;
-		}
-
 		const file = getFileParameter();
 
 		tableOfContentsAside = `

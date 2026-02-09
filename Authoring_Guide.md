@@ -253,7 +253,7 @@ If you want to define variables in your process/system environment use underscor
 
 All setup tasks support filters.
 Oomph reuses [p2's implementation](https://eclipse.dev/eclipse/markdown/?file=eclipse-equinox/p2/master/docs/Installable_Units.md#enablement-filter) of LDAP filters.
-I.e., it supports a string representation of LDAP Search Filters, [RFC 1960](//tools.ietf.org/html/rfc1960), UMich, 1996, [http://www.ietf.org/rfc/rfc1960.txt](http://www.ietf.org/rfc/rfc1960.txt)
+I.e., it supports a string representation of LDAP Search Filters, [RFC 1960](htps://tools.ietf.org/html/rfc1960), UMich, 1996, [http://www.ietf.org/rfc/rfc1960.txt](http://www.ietf.org/rfc/rfc1960.txt)
 
 The filter property of a setup task is an advanced property.
 To display this property, ensure that `Show Advanced Properties` is enabled in the `Properties` view tool bar.
@@ -964,7 +964,7 @@ and is handy to install commonly used 3rd-party Eclipse plug-ins which are not a
 2. Add a repository child in your p2 Director task.
 3. In the Properties of the Repository set the URL to a valid p2 repo, e.g. [http://update.eclemma.org](http://update.eclemma.org).
 4. Right-click that Repository and choose `Explore`, to open the `Repository Explorer` view
-5. In the `Repository Explorer` view change to [X] Compatible and (*) Minor at the lower-right hand corner.
+5. In the `Repository Explorer` view change to `[X]` Compatible and `(*) Minor` at the lower-right hand corner.
 6. Drag & drop the version from the `Repository Explorer` view into the `p2 Director` task of your `*.setup` editor, to create a Requirement child.
    Copy & paste also works.
 7. Alternatively, manually create a new child Requirement inside the p2 Director task
@@ -1102,6 +1102,49 @@ i.e., one that will be able to launch the product; the native extractor consults
 If an appropriate Java is not found, it opens a browser page prompting the user to install an appropriate Java version with the required bitness and at the minimum required version.
 If there is already an appropriate version of Java, it launches a Java process to execute the BinExtract's main method.
 That process in turn unzips the product zip to a temp folder and launches the Java process for that for the product/distribution.
+
+### ConfigurE Additional Git Remotes
+
+You can easily configure every Git clone in every IDE to add a remote for pull requests via a corresponding fork in your GitHub account.
+Use `Navigate > Open Setup > User` and copy and paste the following onto the root `User` object.
+Change the `value` of `github.user.id` to your personal account ID.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Git.ecore">
+  <setup:VariableTask
+      name="github.user.id"
+      value="merks"
+      label="GitHub user ID">
+    <description>The GitHub user ID</description>
+  </setup:VariableTask>
+  <git:GitConfigurationTask
+      remoteURIPattern="(?:https://github.com/|git@github.com:)[^/]*(?&lt;!${github.user.id})(/.*)">
+    <configSections
+        name="remote">
+      <subsections
+          name="${github.user.id}">
+        <properties
+            key="fetch"
+            value="+refs/heads/*:refs/remotes/${github.user.id}/*"
+            force="true"/>
+        <properties
+            key="url"
+            value="git@github.com:${github.user.id}$1"/>
+      </subsections>
+    </configSections>
+  </git:GitConfigurationTask>
+</xmi:XMI>
+```
+
+Git clone tasks will produce the following augmented result:
+
+![GitCloneWithAdditionalRemote](images/GitCloneWithAdditionalRemote.png)
 
 
 ## Oomph Configuration Options
