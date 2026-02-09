@@ -1103,7 +1103,7 @@ If an appropriate Java is not found, it opens a browser page prompting the user 
 If there is already an appropriate version of Java, it launches a Java process to execute the BinExtract's main method.
 That process in turn unzips the product zip to a temp folder and launches the Java process for that for the product/distribution.
 
-### ConfigurE Additional Git Remotes
+### Configure Additional Git Remotes
 
 You can easily configure every Git clone in every IDE to add a remote for pull requests via a corresponding fork in your GitHub account.
 Use `Navigate > Open Setup > User` and copy and paste the following onto the root `User` object.
