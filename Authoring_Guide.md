@@ -798,7 +798,7 @@ see [https://tycho.eclipseprojects.io/doc/latest/TargetPlatform.html](https://ty
 as it allows you to maintain p2 Repositories and Requirements in one single place, and have that be used both for workspace setup and for Tycho builds.
 
 To generate a `*.target` file, use annotation _TargetDefinitionGenerator_.
-An example can be found in Oomph's own [setup model](https://github.com/eclipse-oomph/oomph/blob/1030158fdce259b5b034b60d69561d8c3825e504/setups/Oomph.setup#L528-L570)), like so:
+An example can be found in Oomph's own [setup model](https://github.com/eclipse-oomph/oomph/blob/1030158fdce259b5b034b60d69561d8c3825e504/setups/Oomph.setup#L528-L570), like so:
 ```
 <annotation
     source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
@@ -828,26 +828,49 @@ An example can be found in Oomph's own [setup model](https://github.com/eclipse-
 Note that the `*.target` file will be updated (or initially generated if first time) each time that Oomph Performs Setup Tasks (and not every time you only "touch" your `*.setup` model).
 Any errors encountered while generating the `*.target` file are reported in the Setup Log as usual.
 
-Some useful keys to consider for this annotation:
+The generation process considers all the active repositories of all the targlets and processes the IUs in the resolved target platform to assign each unit to the repository that provides it.
+The following useful keys of the annotation can be used to configure the behavior of the generation process:
 
-* name : String := the name of the generated Target Platform as it appears in `Window → Preferences → Plug-in Development → Target Platforms`
-* location : String := the full location of the generated Target Platform file, e.g. `${git.repository.location/}${scope.project.name}.target`.
-* preferredRepositories : TODO
-* generateImplicitUnits : Boolean := whether the generated target platform is exhaustive or not. Recommended when using Tycho because Tycho sometimes cannot retrieve all dependencies in cases where p2 can.
-* minimizeImplicitUnits : Boolean := TODO
-* generateVersions : Boolean/Pattern := A pattern (true > ".*" / false > """) to match IU IDs for which to generate generate an IU version in the .target file. It can fix some issues where an IU requires a version that is not the most recent version available in the repositories.
-* includeAllPlatforms : Boolean := flag includeAllPlatforms in the generated target file.
-* includeConfigurePhase : Boolean := flag includeConfigurePhase in the generated target file.
-* includeMode : String := Either "planner" or "slicer". Corresponds to "includeMode" in the generated target file.
-* includeSource : Boolean := flag includeSource in the generated target file.
-* extraUnits : TODO
-* singleLocation : TODO
-* sortLocations : TODO
-* generateServerXML : TODO
+* **name**: `String` :=
+  The name of the generated target platform as it appears in `Window → Preferences → Plug-in Development → Target Platforms`.
+* **location** : `String` :=
+  The full location of the generated target platform file, e.g., `${git.repository.location/}${scope.project.name}.target`.
+* **preferredRepositories** : `List<String>` =:
+  A comma- or space-separated list of URLs that will be used to prefix match the targlet's URLs to prioritize those matching repositories to the front of the processing list.
+* **generateImplicitUnits** : `Boolean` :=
+  Whether the generated target platform is a exhaustive or not.
+  Primiarly useful when using Tycho because Tycho sometimes cannot retrieve all dependencies in cases where p2 does.
+* **minimizeImplicitUnits** : `Boolean` :=
+  When generating implict units, mimize them as much as is meaningful for Tycho.
+* **generateVersions** : `Boolean` | `Pattern` :=
+  A pattern (where `true` &rarr; `.* ` | `false` &rarr; ``) to match IU IDs for which to generate generate an IU version in the .target file.
+  It can fix some issues where an IU requires a version that is not the most recent version available in the repositories.
+* **includeAllPlatforms** : `Boolean` :=
+  A flag for `includeAllPlatforms` in the generated target file.
+* **includeConfigurePhase** : `Boolean` :=
+  A flag for `includeConfigurePhase` in the generated target file.
+* **includeMode** : `String` :=
+  Either "planner" or "slicer".
+  Corresponds to `includeMode` in the generated target file.
+* **includeSource** : `Boolean` :=
+  A flag for `includeSource` in the generated target file.
+* **extraUnits** : `List<String>` :=
+  A comma- or space-separated list of IU IDs that we definitely want explicitly mentioned in the generated `*.target`.
+  May include a version of the form `<id>_<version>`.
+* **singleLocation** : `Boolean` :=
+  Whether to generate one location per repository or generate a separate location for each repository.
+* **sortLocations** : `Boolean` :=
+  Whether to sort the repository locations.
+* **unitsFirst** : `Boolean` :=
+  Whether to generate the `<unit>` elements before the `<repository>` elements in the generated `*.target`.
+* **generateServerXML** : `Boolean` :=
+  Whether to generate (add to) the `.m2/settings.xml` for the repositories.
 
-The annotation itself may be annotated with Annotation `RepositoryIDs`	where keys are repository locations and values are the IDs to assign to them in the generated `*.target` file.
+The annotation itself may be annotated with Annotation `RepositoryIDs`
+where each key is a repository location and the corresponding value is the ID to assign to it in the generated `*.target` file.
 
-_TODO Document what preferredRepositories, PomModulesUpdater & PomArtifactUpdater do..._
+_TODO Document what PomModulesUpdater & PomArtifactUpdater do..._
+
 
 ### Setting up WST Server Runtime and Instances
 
