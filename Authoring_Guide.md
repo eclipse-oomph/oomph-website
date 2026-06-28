@@ -859,6 +859,10 @@ The following useful keys of the annotation can be used to configure the behavio
   May include a version of the form `<id>_<version>`.
 * **singleLocation** : `Boolean` :=
   Whether to generate one location per repository or generate a separate location for each repository.
+* **minimizeLocationUnits** : `Boolean` :=
+  Only meaningful when `singleLocations` is true.
+  Reduces the units to those that would be used for a single location,
+  and then factors those units out to each individual location.
 * **sortLocations** : `Boolean` :=
   Whether to sort the repository locations.
 * **unitsFirst** : `Boolean` :=
@@ -871,6 +875,37 @@ where each key is a repository location and the corresponding value is the ID to
 
 _TODO Document what PomModulesUpdater & PomArtifactUpdater do..._
 
+
+### Augmenting the Targlet-Induced Target Platform
+
+It's sometimes convenient to temporarily augment the target platform that you have defined using targlet tasks in your project setup.
+Use menu `Navigate → Open Setup → Open Workspace` to open the workspace.setup.
+Then copy the following text and paste it onto the `Workspace file:...` object:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<setup.targlets:TargletTask
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/targlets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupTarglets.ecore">
+  <targlet name="Additions">
+    <repositoryList/>
+  </targlet>
+</setup.targlets:TargletTask>
+```
+
+You can use the `Repository Explorer` view to explore the contents of a repository.
+From the explorer you can drag units onto the `Additions` targlet.
+For this purpose, it's best to enable showing capabilities, i.e., `Expert Mode`
+
+![RepositoryExplorerExpertMode](images/RepositoryExplorerExpertMode.png)
+
+You can also add repository locations to the `Repository List`.
+
+When you perform the setup tasks, the `Additions` targlet with be composed with other targlets you've defined in your setup.
+Later on, when you don't need these anymore, you can use the context menu on the `Modular Target` to invoke `Disabled` 
+to disable the task until the next time you want to use it.
 
 ### Setting up WST Server Runtime and Instances
 
