@@ -860,7 +860,7 @@ The following useful keys of the annotation can be used to configure the behavio
 * **singleLocation** : `Boolean` :=
   Whether to generate one location per repository or generate a separate location for each repository.
 * **minimizeLocationUnits** : `Boolean` :=
-  Only meaningful when `singleLocations` is true.
+  Only meaningful when `singleLocations` is false.
   Reduces the units to those that would be used for a single location,
   and then factors those units out to each individual location.
 * **sortLocations** : `Boolean` :=
