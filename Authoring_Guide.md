@@ -270,7 +270,7 @@ For example, this idiom can be used to express if-then-else.
  <xmi:XMI xmi:version="2.0"
      xmlns:xmi="http://www.omg.org/XMI"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:setup="https://www.eclipse.org/oomph/setup/1.0">
+     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0">
    <setup:VariableTask
        type="BOOLEAN"
        name="example.filter"
@@ -328,7 +328,7 @@ Filters can be used in combination with implicit variable such that tasks will b
  <xmi:XMI xmi:version="2.0"
      xmlns:xmi="http://www.omg.org/XMI"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:setup="https://www.eclipse.org/oomph/setup/1.0">
+     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0">
    <setup:CompoundTask
        filter="(!(example.installation.filter=true))"
        name="Filter Once Per Installation">
@@ -393,8 +393,8 @@ Here is an example of how one could use a Macro for creating a Git Clone task:
      xmi:version="2.0"
      xmlns:xmi="http://www.omg.org/XMI"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:git="https://www.eclipse.org/oomph/setup/git/1.0"
-     xmlns:setup="https://www.eclipse.org/oomph/setup/1.0"
+     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
      label="Git Clone">
    <setupTask
        xsi:type="git:GitCloneTask"
@@ -404,7 +404,7 @@ Here is an example of how one could use a Macro for creating a Git Clone task:
        pushURI="${pushURI}"
        checkoutBranch="${checkoutBranch}">
      <annotation
-         source="https://www.eclipse.org/oomph/setup/FeatureSubstitution">
+         source="http://www.eclipse.org/oomph/setup/FeatureSubstitution">
        <detail
            key="restrictToCheckoutBranch">
          <value>${restrictToCheckoutBranch}</value>
@@ -486,7 +486,7 @@ Here is an example of how the above Macro could be used by a Macro Expansion tas
      xmi:version="2.0"
      xmlns:xmi="http://www.omg.org/XMI"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:setup="https://www.eclipse.org/oomph/setup/1.0"
+     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
      name="sample.project"
      label="SampleProject">
    <setupTask
@@ -635,7 +635,7 @@ The name/label is computed from the project name(s).
 But you can use an annotation like the following on the Configuration object to specify the badge label explicitly how you want it:
 ```
 <annotation
-    source="https://www.eclipse.org/oomph/setup/BrandingInfo">
+    source="http://www.eclipse.org/oomph/setup/BrandingInfo">
   <detail
       key="imageURI">
     <value>https://www.eclipse.org/downloads/images/committers.png</value>
@@ -934,7 +934,7 @@ Requires server runtime to be setup first.
    <setup:ResourceCreationTask
        xmi:version="2.0"
        xmlns:xmi="http://www.omg.org/XMI"
-       xmlns:setup="https://www.eclipse.org/oomph/setup/1.0"
+       xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
        content="PUT_CONTENT_FROM_SERVERS_XML_INTO_HERE_USING_A_UTF_CAPABLE_EDITOR_AND_OOMPH_DIALOG"
        targetURL="${workspace.location|uri}/.metadata/.plugins/org.eclipse.wst.server.core/servers.xml"
        encoding="UTF-8">
@@ -962,7 +962,7 @@ Adjust the `SHOW_WORKSPACE_SELECTION_DIALOG` property to `false` via configurati
 <setup:ResourceCreationTask
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:setup="https://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     excludedTriggers="STARTUP MANUAL"
     content="MAX_RECENT_WORKSPACES=5&#xD;&#xA;RECENT_WORKSPACES=${workspace.location|property}&#xD;&#xA;RECENT_WORKSPACES_PROTOCOL=3&#xD;&#xA;SHOW_WORKSPACE_SELECTION_DIALOG=false&#xD;&#xA;eclipse.preferences.version=1"
     targetURL="configuration:/.settings/org.eclipse.ui.ide.prefs"
@@ -979,7 +979,7 @@ Tell Eclipse which perspective to open initially, by adding option to eclipse in
 <setup:EclipseIniTask
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:setup="https://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     excludedTriggers="STARTUP"
     option="-perspective"
     value="org.eclipse.jdt.ui.JavaPerspective"/>
@@ -991,7 +991,7 @@ Setting a perspective to be default, by adding preference task:
 <setup:PreferenceTask
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:setup="https://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     key="/instance/org.eclipse.ui/defaultPerspectiveId"
     value="org.eclipse.jdt.ui.JavaPerspective"/>
 ```
@@ -1232,7 +1232,7 @@ If you are not using it you can include the same task by yourself:
 <setup.p2:P2Task
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:setup.p2="https://www.eclipse.org/oomph/setup/p2/1.0">
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0">
   <requirement
       name="org.eclipse.oomph.setup.feature.group"/>
   <repository
